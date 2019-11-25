@@ -6,6 +6,7 @@ cfgv==2.0.1
 chardet==3.0.4
 Click==7.0
 filelock==3.0.12
+googletrans==2.4.0
 identify==1.4.7
 idna==2.8
 importlib-metadata==0.23
@@ -23,7 +24,6 @@ six==1.13.0
 soupsieve==1.9.5
 toml==0.10.0
 tox==3.14.1
-translate==3.5.0
 urllib3==1.25.7
 virtualenv==16.7.8
 zipp==0.6.0
