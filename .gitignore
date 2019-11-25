@@ -1,0 +1,13 @@
+# Virtual environment
+env/
+venv/
+
+# Parser output
+drugs.json
+
+# Translator output
+drugs_en.json
+
+# System folders
+.idea/
+__pycache__/
