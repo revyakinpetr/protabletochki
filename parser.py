@@ -1,8 +1,8 @@
 import requests
-import json
 
 from bs4 import BeautifulSoup
-from pprint import pprint
+
+from json_utils import save_json_to_file
 
 
 def open_page_by_link(link):
@@ -68,11 +68,6 @@ def get_json_review(review):
     }
 
 
-def save_to_file(data):
-    with open('drugs.json', 'w', encoding='utf-8') as file:
-        json.dump(data, file)
-
-
 def parse():
     file_text = []
 
@@ -98,7 +93,7 @@ def parse():
         json_review = get_json_review(review)
         file_text[len(file_text) - 1]['reviews'].append(json_review)
         # Сохраняем в файл
-        save_to_file(file_text)
+        save_json_to_file('drugs.json', file_text)
 
 
 if __name__ == '__main__':
