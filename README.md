@@ -14,4 +14,7 @@ of comments.
 `translator.py` gets text from json file, by default `drugs.json`, translates the fields that need to be translated
 and writes the output to other file, by default `drugs_en.json`.
 
+`tokenizator.py` gets text from json file, by default `drugs_en.json`, normalize the fields that need to be normalized
+and writes the output to other file, by default `drugs_token.json`.
+
 `json_utils.py` contains functions to read and write JSON to/from file.
