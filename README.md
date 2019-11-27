@@ -18,3 +18,5 @@ and writes the output to other file, by default `drugs_en.json`.
 and writes the output to other file, by default `drugs_token.json`.
 
 `json_utils.py` contains functions to read and write JSON to/from file.
+
+[Cтатья](https://docs.google.com/document/d/1aj9DaP0IygpUmQsxu24yj5ePrehVejW8jn-K_B3qpd4/mobilebasic)
