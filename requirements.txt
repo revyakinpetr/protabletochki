@@ -27,3 +27,4 @@ tox==3.14.1
 urllib3==1.25.7
 virtualenv==16.7.8
 zipp==0.6.0
+nltk==3.4.5
