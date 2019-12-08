@@ -93,7 +93,7 @@ def parse():
         json_review = get_json_review(review)
         file_text[len(file_text) - 1]['reviews'].append(json_review)
         # Сохраняем в файл
-        save_json_to_file('drugs.json', file_text)
+        save_json_to_file('data/drugs.json', file_text)
 
 
 if __name__ == '__main__':

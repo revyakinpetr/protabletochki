@@ -2,11 +2,9 @@
 env/
 venv/
 
-# Parser output
-drugs.json
-
-# Translator output
-drugs_en.json
+# Output
+data/
+!data/drugs_list.json
 
 # System folders
 .idea/
