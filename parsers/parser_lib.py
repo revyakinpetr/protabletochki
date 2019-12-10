@@ -75,7 +75,7 @@ def get_reviews_by_page(page):
     # Достаем объекты отзыва
     for review in review_list:
         json_review = get_json_review(review)
-        file_text[len(file_text) - 1]['reviews'].append(json_review)
+        file_text.append(json_review)
     return file_text
 
 
