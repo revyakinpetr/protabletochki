@@ -1,9 +1,7 @@
 from bs4 import BeautifulSoup
-import requests
 from parse_drug_names import parse_drug_names
 from open_page_by_link import open_page_by_link
 from json_utils import save_json_to_file
-import urllib.parse
 
 WEBSITE_URL = 'https://drugchoice.vrachirf.ru'
 WEBSITE_NAME = 'drugchoice'
@@ -40,7 +38,7 @@ def get_reviews(drug_link):
     return reviews_json
 
 
-def parse_drug_reviews(drug_name: str) -> list:
+def parse_drug_reviews(drug_name):
     """
     1. Get list of possible links to drug page
     2. Get link to reviews
