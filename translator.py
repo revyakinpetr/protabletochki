@@ -50,7 +50,7 @@ def translate_reviews(
 if __name__ == "__main__":
     for drug_name in DRUG_NAMES:
         for drug_file in DRUG_FILES:
-            if drug_name in drug_file:
+            if drug_file.startswith(drug_name):
                     drugs_json = get_json_from_file(
                         filename=DATA_DIR+drug_file
                     )
