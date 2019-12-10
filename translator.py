@@ -1,15 +1,18 @@
 from googletrans import Translator
 from json_utils import get_json_from_file, save_json_to_file
+from parsers.parse_drug_names import parse_drug_names
+import os
+from os.path import isfile, join
 
-DEFAULT_DATA_SOURCE = 'data/drugs.json'
-DEFAULT_DATA_DESTINATION = 'data/drugs_en.json'
+DATA_DIR = os.getcwd()+'/data/'
+DRUG_FILES = [f for f in os.listdir(DATA_DIR) if isfile(join(DATA_DIR, f))]
+
+DRUG_NAMES = parse_drug_names(drugs_list_filename=DATA_DIR+'drugs_list.json')
 
 DEFAULT_FROM_LANGUAGE = 'ru'
 DEFAULT_TO_LANGUAGE = 'en'
 
 REVIEW_FIELDS_TO_TRANSLATE = (
-    'comment_plus',
-    'comment_minus',
     'comment'
 )
 
@@ -40,22 +43,21 @@ def translate_reviews(
         drugs: dict,
 ) -> dict:
     for drug in drugs:
-        for review in drug['reviews']:
-            for field in review.keys():
-                if field in REVIEW_FIELDS_TO_TRANSLATE:
-                    review[field] = translate(review[field])
+        drug['comment'] = translate(drug['comment'])
     return drugs
 
 
 if __name__ == "__main__":
+    for drug_name in DRUG_NAMES:
+        for drug_file in DRUG_FILES:
+            if drug_name in drug_file:
+                    drugs_json = get_json_from_file(
+                        filename=DATA_DIR+drug_file
+                    )
 
-    drugs_json = get_json_from_file(
-        filename=DEFAULT_DATA_SOURCE
-    )
+                    translate_reviews(drugs_json)
 
-    translate_reviews(drugs_json)
-
-    save_json_to_file(
-        filename=DEFAULT_DATA_DESTINATION,
-        data=drugs_json,
-    )
+                    save_json_to_file(
+                        filename=DATA_DIR+'en_'+drug_file,
+                        data=drugs_json,
+                    )
