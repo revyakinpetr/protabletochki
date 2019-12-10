@@ -68,6 +68,17 @@ def get_json_review(review):
     }
 
 
+def get_reviews_by_page(page):
+    # Получаем список отзывов на лекарство
+    file_text = []
+    review_list = get_reviews(page)
+    # Достаем объекты отзыва
+    for review in review_list:
+        json_review = get_json_review(review)
+        file_text[len(file_text) - 1]['reviews'].append(json_review)
+    return file_text
+
+
 def parse():
     file_text = []
 
@@ -93,7 +104,7 @@ def parse():
         json_review = get_json_review(review)
         file_text[len(file_text) - 1]['reviews'].append(json_review)
         # Сохраняем в файл
-        save_json_to_file('drugs.json', file_text)
+        save_json_to_file('data/drugs.json', file_text)
 
 
 if __name__ == '__main__':

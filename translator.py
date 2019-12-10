@@ -1,8 +1,8 @@
 from googletrans import Translator
 from json_utils import get_json_from_file, save_json_to_file
 
-DEFAULT_DATA_SOURCE = 'drugs.json'
-DEFAULT_DATA_DESTINATION = 'drugs_en.json'
+DEFAULT_DATA_SOURCE = 'data/drugs.json'
+DEFAULT_DATA_DESTINATION = 'data/drugs_en.json'
 
 DEFAULT_FROM_LANGUAGE = 'ru'
 DEFAULT_TO_LANGUAGE = 'en'

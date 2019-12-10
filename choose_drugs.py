@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-from parser import open_page_by_link
+from parsers.parser import open_page_by_link
 from pprint import pprint
 
 

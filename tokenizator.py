@@ -4,8 +4,8 @@ import string
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer 
 
-DEFAULT_DATA_SOURCE = 'drugs_en.json'
-DEFAULT_DATA_DESTINATION = 'drugs_token.json'
+DEFAULT_DATA_SOURCE = 'data/drugs_en.json'
+DEFAULT_DATA_DESTINATION = 'data/drugs_token.json'
 
 REVIEW_FIELDS_TO_TOKENIZE = (
     'comment_plus',
@@ -22,6 +22,7 @@ def get_wordnet_pos(word):
                 "V": wordnet.VERB,
                 "R": wordnet.ADV}
     return tag_dict.get(tag, wordnet.NOUN)
+
 
 def normalize_comments(
         drugs:dict,
@@ -40,6 +41,7 @@ def normalize_comments(
 
                     review[field] = [lemmatizer.lemmatize(i, get_wordnet_pos(i)) for i in review[field]]
     return drugs
+
 
 if __name__ == "__main__":
 
