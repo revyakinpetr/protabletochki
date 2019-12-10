@@ -1,23 +1,17 @@
 from typing import List, Any
 import requests
 
-from pathlib import Path, PureWindowsPath
 from transliterate import translit, slugify
 from bs4 import BeautifulSoup
 
 from parse_drug_names import parse_drug_names as pdn
 from json_utils import save_json_to_file
+from path_utils import get_correct_path
 import parser_lib as parser
 
 
 site = 'https://protabletky.ru'
 site_name = 'protabletky'
-
-
-def get_correct_path(path: str) -> str:
-	"""Convert path to valid format for all system using pathlib."""
-	filename = PureWindowsPath(path)
-	return Path(filename)
 
 
 def word_to_en(word: str) -> str:
