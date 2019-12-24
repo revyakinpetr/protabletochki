@@ -1,11 +1,18 @@
+import os
+
 from json_utils import get_json_from_file, save_json_to_file
 import nltk
 import string
 from nltk.corpus import stopwords, wordnet
-from nltk.stem import WordNetLemmatizer 
+from nltk.stem import WordNetLemmatizer
 
-DEFAULT_DATA_SOURCE = 'data/drugs_en.json'
-DEFAULT_DATA_DESTINATION = 'data/drugs_token.json'
+from parsers.parse_drug_names import parse_drug_names
+from os.path import isfile, join
+
+DATA_DIR = os.getcwd()+'/data/'
+DRUG_FILES = [f for f in os.listdir(DATA_DIR) if isfile(join(DATA_DIR, f))]
+
+DRUG_NAMES = parse_drug_names(drugs_list_filename=DATA_DIR+'drugs_list.json')
 
 REVIEW_FIELDS_TO_TOKENIZE = (
     'comment_plus',
@@ -31,8 +38,7 @@ def normalize_comments(
     lemmatizer = WordNetLemmatizer()
     punctuation = string.punctuation
     punctuation += "''``"
-    for drug in drugs:
-        for review in drug['reviews']:
+    for review in drugs:
             for field in review.keys():
                 if field in REVIEW_FIELDS_TO_TOKENIZE:
                     review[field] = nltk.word_tokenize(review[field])
@@ -45,13 +51,17 @@ def normalize_comments(
 
 if __name__ == "__main__":
 
-    drugs_json = get_json_from_file(
-        filename=DEFAULT_DATA_SOURCE
-    )
+    for drug_name in DRUG_NAMES:
+        for drug_file in DRUG_FILES:
+            if drug_file.startswith('en_'+drug_name):
 
-    normalize_comments(drugs_json)
+                drugs_json = get_json_from_file(
+                    filename=DATA_DIR+drug_file
+                )
 
-    save_json_to_file(
-        filename=DEFAULT_DATA_DESTINATION,
-        data=drugs_json,
-    )
+                normalize_comments(drugs_json)
+
+                save_json_to_file(
+                    filename=DATA_DIR+'token_'+drug_file,
+                    data=drugs_json,
+                )
