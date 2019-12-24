@@ -5,6 +5,7 @@ venv/
 # Output
 data/
 !data/drugs_list.json
+!data/meddra_all_se.txt
 
 # System folders
 .idea/

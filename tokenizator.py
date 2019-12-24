@@ -2,6 +2,9 @@ import os
 
 from json_utils import get_json_from_file, save_json_to_file
 import nltk
+import os
+from os.path import isfile, join
+from parsers.parse_drug_names import parse_drug_names
 import string
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
@@ -15,12 +18,10 @@ DRUG_FILES = [f for f in os.listdir(DATA_DIR) if isfile(join(DATA_DIR, f))]
 DRUG_NAMES = parse_drug_names(drugs_list_filename=DATA_DIR+'drugs_list.json')
 
 REVIEW_FIELDS_TO_TOKENIZE = (
-    'comment_plus',
-    'comment_minus',
     'comment'
 )
 
- 
+
 def get_wordnet_pos(word):
     """Получение части речи для лемматизации"""
     tag = nltk.pos_tag([word])[0][1][0].upper()
@@ -32,7 +33,7 @@ def get_wordnet_pos(word):
 
 
 def normalize_comments(
-        drugs:dict,
+        reviews: dict,
 ):
     """Нормализация коментариев посредством удаления знаков пунктации, стоп слов, а также токенизация и лемматизация"""
     lemmatizer = WordNetLemmatizer()
