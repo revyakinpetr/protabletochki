@@ -1,3 +1,5 @@
+import os
+
 from json_utils import get_json_from_file, save_json_to_file
 import nltk
 import os
@@ -7,10 +9,13 @@ import string
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import WordNetLemmatizer
 
-DATA_DIR = os.getcwd() + '/data/'
+from parsers.parse_drug_names import parse_drug_names
+from os.path import isfile, join
+
+DATA_DIR = os.getcwd()+'/data/'
 DRUG_FILES = [f for f in os.listdir(DATA_DIR) if isfile(join(DATA_DIR, f))]
 
-DRUG_NAMES = parse_drug_names(drugs_list_filename=DATA_DIR + 'drugs_list.json')
+DRUG_NAMES = parse_drug_names(drugs_list_filename=DATA_DIR+'drugs_list.json')
 
 REVIEW_FIELDS_TO_TOKENIZE = (
     'comment'
@@ -34,12 +39,15 @@ def normalize_comments(
     lemmatizer = WordNetLemmatizer()
     punctuation = string.punctuation
     punctuation += "''``"
-    for review in reviews:
-        review['comment'] = nltk.word_tokenize(review['comment'])
-        review['comment'] = [i for i in review['comment'] if (i not in punctuation)]
-        review['comment'] = [i for i in review['comment'] if (i not in stopwords.words('english'))]
-        review['comment'] = [lemmatizer.lemmatize(i, get_wordnet_pos(i)) for i in review['comment']]
-    return reviews
+    for review in drugs:
+            for field in review.keys():
+                if field in REVIEW_FIELDS_TO_TOKENIZE:
+                    review[field] = nltk.word_tokenize(review[field])
+                    review[field] = [i for i in review[field] if ( i not in punctuation )]
+                    review[field] = [i for i in review[field] if ( i not in stopwords.words('english') )]
+
+                    review[field] = [lemmatizer.lemmatize(i, get_wordnet_pos(i)) for i in review[field]]
+    return drugs
 
 
 if __name__ == "__main__":
@@ -47,13 +55,14 @@ if __name__ == "__main__":
     for drug_name in DRUG_NAMES:
         for drug_file in DRUG_FILES:
             if drug_file.startswith('en_'+drug_name):
-                reviews_json = get_json_from_file(
+
+                drugs_json = get_json_from_file(
                     filename=DATA_DIR+drug_file
                 )
 
-                normalize_comments(reviews_json)
+                normalize_comments(drugs_json)
 
                 save_json_to_file(
-                    filename=DATA_DIR+'token_' + drug_file,
-                    data=reviews_json,
+                    filename=DATA_DIR+'token_'+drug_file,
+                    data=drugs_json,
                 )
