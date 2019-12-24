@@ -1,6 +1,6 @@
 import os
 from os.path import isfile, join
-from json_utils import get_json_from_file
+from json_utils import get_json_from_file, save_json_to_file
 from parsers.path_utils import get_correct_path
 from parsers.parse_drug_names import parse_drug_names
 
@@ -56,4 +56,5 @@ if __name__ == "__main__":
         if drug_file.startswith('token_en_'):
             drug_side_effects.append(work_with_drug_file(drug_file))
 
-    pprint(drug_side_effects)
+    filename = get_correct_path(os.getcwd() + '/data/drug_side_effects.json')
+    save_json_to_file(filename, drug_side_effects)
